@@ -11,10 +11,10 @@ def calculate_sum():
 
         result_label.config(text=f"{a} + {b} + {c} = {result}")
         
-        result_line_number = len(result_label["text"])/50
+        result_line_number = len(result_label["text"])
 
         # Calculate the required window height based on content
-        window_height = int(300 + (result_line_number * 35))   # Adjust padding as needed
+        window_height = int(300 + (result_line_number ))   # Adjust padding as needed
         app.geometry(f"250x{window_height}")
 
     except ValueError:
