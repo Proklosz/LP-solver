@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Page Title</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <script>
+        var api_url = 'http://127.0.0.1:5000/calculate';
+
+        function Py_Api() {
+            let sns1s = document.getElementsByName("S1")
+            let sns1sz
+            for (const sns1 of sns1s) {
+                if (sns1.checked) {
+                    sns1sz = sns1.value;
+                    break;
+                }
+            }
+
+            let sns2s = document.getElementsByName("S2")
+            let sns2sz
+            for (const sns2 of sns2s) {
+                if (sns2.checked) {
+                    sns2sz = sns2.value;
+                    break;
+                }
+            }
+
+            let ProblemSENSEs = document.getElementsByName("SENSE")
+            let ProblemSENSEF
+            for (const ProblemSENSE of ProblemSENSEs) {
+                if (ProblemSENSE.checked) {
+                    ProblemSENSEF = ProblemSENSE.value;
+                    break;
+                }
+            }
+
+            var data = {
+                variable_values: [parseFloat(document.getElementById("v1").value), parseFloat(document.getElementById("v2").value), parseFloat(document.getElementById("v3").value)],
+                senSes: [sns1sz, sns2sz],
+                RHS: [parseFloat(document.getElementById("rhs1").value), parseFloat(document.getElementById("rhs2").value)],
+                ProblemSense: ProblemSENSEF
+            };
+
+            fetch(api_url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        // Display the result in your web app
+                        document.getElementById("result").textContent = 'Result: ' + data.result;
+                        console.log('Result:', data.result);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
+    </script>
+
+    <div id="titlehelper">
+        <h1>LP-solver</h1>
+    </div>
+
+    <div id="container">
+        <div id="varlabel">Variables</div>
+        <div id="variables">
+            <label for="v1">variable 1 :</label>
+            <input type="number" id="v1"><br>
+            <label for="v2">variable 2 :</label>
+            <input type="number" id="v2"><br>
+            <label for="v3">variable 3 :</label>
+            <input type="number" id="v3"><br>
+        </div>
+
+        <div id="SNSe">Sense</div>
+        <form id="Sense">
+            <input type="radio" id="Minimise" name="SENSE" value="MIN">
+            <label for="Minimise">Minimize</label><br>
+            <input type="radio" id="Maximise" name="SENSE" value="MAX">
+            <label for="Maximise">Maximize</label><br>
+        </form>
+
+        <div id="RHSLabel">RHS values</div>
+        <div id="RHS-values">
+            <label for="rhs1">RHS 1 :</label>
+            <input type="number" id="rhs1"><br>
+            <label for="rhs2">RHS 2 :</label>
+            <input type="number" id="rhs2"><br>
+        </div>
+
+        <div id="cons1">Constrain 1</div>
+        <div id="constrain1box">
+            <form>
+                <input type="radio" id="L1" name="S1" value="L">
+                <label for="L1">lower or equal</label><br>
+                <input type="radio" id="G1" name="S1" value="G">
+                <label for="G1">greater or equal</label><br>
+                <input type="radio" id="E1" name="S1" value="E">
+                <label for="E1">equal</label>
+            </form>
+        </div>
+
+        <div id="cons2">Constrain 2</div>
+        <div id="constrain2box">
+            <form>
+                <input type="radio" id="L2" name="S2" value="L">
+                <label for="L2">lower or equal</label><br>
+                <input type="radio" id="G2" name="S2" value="G">
+                <label for="G2">greater or equal</label><br>
+                <input type="radio" id="E2" name="S2" value="E">
+                <label for="E2">equal</label>
+            </form>
+        </div>
+
+        <div id="btnhelper">
+            <button onclick="Py_Api()" id="calcbutton">Calculate</button><br>
+        </div>
+        <div id="Res">Result</div>
+        <p id="result"></p>
+
+    </div>
+
+</body>
+
+</html>
