@@ -27,9 +27,9 @@ def SolveAndPrint(solver, variable_list, constraint_list, is_precise):
     for variable in variable_list:
         print("%s = %f" % (variable.name(), variable.solution_value()))
         if(result == ''):
-            result = result + str("%s = %f " % (variable.name(), variable.solution_value()))
+            result = result + str("%s = %d " % (variable.name(), variable.solution_value()))
         else:
-            result = result + "  ||  " + str("%s = %f " % (variable.name(), variable.solution_value()))
+            result = result + "  ||  " + str("%s = %d " % (variable.name(), variable.solution_value()))
 
     print("Advanced usage:")
     print("----Problem solved in %d iterations" % solver.iterations())
