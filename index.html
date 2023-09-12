@@ -7,15 +7,17 @@
 
 <body>
     <script>
+        // Assume you have input values a, b, and c from your web form
         var api_url = 'http://127.0.0.1:5000/calculate';
 
         function Py_Api() {
+            console.log('Button clicked')
             let sns1s = document.getElementsByName("S1")
             let sns1sz
             for (const sns1 of sns1s) {
                 if (sns1.checked) {
                     sns1sz = sns1.value;
-                    break;
+                    break; // Exit the loop once a checked radio button is found
                 }
             }
 
@@ -24,7 +26,7 @@
             for (const sns2 of sns2s) {
                 if (sns2.checked) {
                     sns2sz = sns2.value;
-                    break;
+                    break; // Exit the loop once a checked radio button is found
                 }
             }
 
@@ -33,14 +35,14 @@
             for (const ProblemSENSE of ProblemSENSEs) {
                 if (ProblemSENSE.checked) {
                     ProblemSENSEF = ProblemSENSE.value;
-                    break;
+                    break; // Exit the loop once a checked radio button is found
                 }
             }
 
             var data = {
                 variable_values: [parseFloat(document.getElementById("v1").value), parseFloat(document.getElementById("v2").value), parseFloat(document.getElementById("v3").value)],
-                senSes: [sns1sz, sns2sz],
-                RHS: [parseFloat(document.getElementById("rhs1").value), parseFloat(document.getElementById("rhs2").value)],
+                senSes: [sns1sz,sns2sz],
+                RHS: [parseFloat(document.getElementById("rhs1").value),parseFloat(document.getElementById("rhs2").value)],
                 ProblemSense: ProblemSENSEF
             };
 
@@ -57,8 +59,9 @@
                         alert(data.error);
                     } else {
                         // Display the result in your web app
-                        document.getElementById("result").textContent = 'Result: ' + data.result;
+                        document.getElementById("result").textContent = data;
                         console.log('Result:', data.result);
+                        console.log('data:', data);
                     }
                 })
                 .catch(error => console.error('Error:', error));
@@ -89,7 +92,7 @@
             <input type="radio" id="Maximise" name="SENSE" value="MAX">
             <label for="Maximise">Maximize</label><br>
         </form>
-
+    
         <div id="RHSLabel">RHS values</div>
         <div id="RHS-values">
             <label for="rhs1">RHS 1 :</label>
@@ -127,8 +130,16 @@
         </div>
         <div id="Res">Result</div>
         <p id="result"></p>
-
+        
     </div>
+
+
+
+   
+
+
+
+
 
 </body>
 
