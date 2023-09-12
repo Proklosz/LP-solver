@@ -25,7 +25,7 @@ def SolveAndPrint(solver, variable_list, constraint_list, is_precise):
     # The value of each variable in the solution.
     result =''
     for variable in variable_list:
-        print("%s = %f" % (variable.name(), variable.solution_value()))
+        print("%s = %d" % (variable.name(), variable.solution_value()))
         if(result == ''):
             result = result + str("%s = %d " % (variable.name(), variable.solution_value()))
         else:
